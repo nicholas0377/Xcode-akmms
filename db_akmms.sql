@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2023 at 09:37 AM
+-- Generation Time: Dec 25, 2023 at 04:41 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -80,7 +80,8 @@ CREATE TABLE `tb_customer` (
 CREATE TABLE `tb_deliveryorder` (
   `delivery_id` varchar(10) NOT NULL,
   `order_id` varchar(10) NOT NULL,
-  `quotation_id` varchar(10) NOT NULL
+  `quotation_id` varchar(10) NOT NULL,
+  `do_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +97,8 @@ CREATE TABLE `tb_invoice` (
   `invoice_upfront` double(10,2) DEFAULT NULL,
   `order_id` varchar(10) NOT NULL,
   `quotation_id` varchar(10) NOT NULL,
-  `delivery_id` varchar(10) NOT NULL
+  `delivery_id` varchar(10) NOT NULL,
+  `invoice_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -207,7 +209,8 @@ CREATE TABLE `tb_quotation` (
   `grand_total` float(10,2) NOT NULL,
   `quotation_type_id` int(2) NOT NULL,
   `quotation_status_id` int(2) NOT NULL,
-  `payment_term_id` int(2) NOT NULL
+  `payment_term_id` int(2) NOT NULL,
+  `quotation_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -258,19 +261,22 @@ CREATE TABLE `tb_salesorder` (
 CREATE TABLE `tb_user` (
   `user_id` varchar(10) NOT NULL,
   `user_ic` varchar(15) NOT NULL,
-  `user_pwd` varchar(15) NOT NULL,
-  `user_fName` varchar(50) NOT NULL,
-  `user_lName` varchar(50) NOT NULL,
+  `user_pwd` varchar(255) NOT NULL,
+  `u_fName` varchar(50) NOT NULL,
+  `u_lName` varchar(50) NOT NULL,
   `user_phone` varchar(20) NOT NULL,
   `user_email` varchar(100) NOT NULL,
-  `u_street` varchar(50) NOT NULL,
-  `u_postcode` int(7) NOT NULL,
-  `u_city` varchar(20) NOT NULL,
-  `u_state` varchar(20) NOT NULL,
-  `u_country` varchar(30) NOT NULL,
+  `user_address` varchar(200) NOT NULL,
   `user_position` varchar(50) NOT NULL,
   `type_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_user`
+--
+
+INSERT INTO `tb_user` (`user_id`, `user_ic`, `user_pwd`, `u_fName`, `u_lName`, `user_phone`, `user_email`, `user_address`, `user_position`, `type_id`) VALUES
+('chloe1234', '030917140923', '1234', 'Chloe', 'Yau', '017-1095-3367', 'neozhengweng@gmail.com', 'Lot 88, Kg. Teluk Kemang, 71000, Port Dickson, Negeri Sembilan', 'Manager', 2);
 
 -- --------------------------------------------------------
 
@@ -282,6 +288,14 @@ CREATE TABLE `tb_usertype` (
   `type_id` int(2) NOT NULL,
   `type_desc` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_usertype`
+--
+
+INSERT INTO `tb_usertype` (`type_id`, `type_desc`) VALUES
+(1, 'staff'),
+(2, 'admin');
 
 --
 -- Indexes for dumped tables
